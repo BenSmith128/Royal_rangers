@@ -1,0 +1,17 @@
+# Here's what is used for unregistered children after you've observed changes
+
+CREATE TABLE `Royal_rangers.fromyear_toyear_unch_l2` AS (
+  SELECT
+    ROW_NUMBER() OVER (ORDER BY First_att, Unch_name) AS Unch_num,
+    Unch_name,
+    First_att
+  FROM `Royal_rangers.fromyear_toyear_unch_l1`
+);
+
+DROP TABLE `Royal_rangers.fromyear_toyear_unchartered_list`;
+
+CREATE TABLE `Royal_rangers.fromyear_toyear_unchartered_list` AS (
+  SELECT
+    *
+  FROM `Royal_rangers.fromyear_toyear_unch_l2`
+);
