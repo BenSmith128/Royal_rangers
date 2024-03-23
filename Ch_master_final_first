@@ -1,5 +1,10 @@
-# This works for initial creation only.
-# After changes are made, there is longer code. 
+# This is the second step
+# `Royal_rangers.y1_y2_ch_l1` is created in Chartered_master_initial
+
+INSERT INTO `Royal_rangers.y1_y2_ch_l1`
+VALUES
+  ('First Last', DATE 'YYYY-MM-DD'), --For example, ('Bob Smith', DATE '2024-01-03')
+  ('First Last', DATE 'YYYY-MM-DD');
 
 CREATE TABLE `Royal_rangers.y1_y2_ch_list` AS ( --For example, for the 2023-24 year, the table is '23_24_ch_list'
   SELECT
