@@ -1,4 +1,5 @@
 # This table is created AFTER master_initial
+# It will most likely need to be updated weekly because of the row number
 
 CREATE TABLE `Royal_rangers.year_unchartered_list` AS (
   SELECT
