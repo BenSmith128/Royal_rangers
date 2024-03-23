@@ -1,0 +1,4 @@
+CREATE TABLE `Royal_rangers.year_ch_o1` (
+  Ch_name STRING,  -- all names
+  Ch_date DATE
+)
