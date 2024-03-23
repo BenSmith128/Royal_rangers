@@ -1,10 +1,10 @@
 # This works for initial creation only.
 # After changes are made, there is longer code. 
 
-CREATE TABLE `Royal_rangers.yy1_yy2_ch_list` AS ( --For example, for the 2023-24 year, the table is '23_24_ch_list'
+CREATE TABLE `Royal_rangers.y1_y2_ch_list` AS ( --For example, for the 2023-24 year, the table is '23_24_ch_list'
   SELECT
     ROW_NUMBER() OVER (ORDER BY Ch_date, Ch_name) AS Ch_num,
     Ch_name,
     Ch_date
-  FROM `Royal_rangers.yy1_yy2_ch_l1`
+  FROM `Royal_rangers.y1_y2_ch_l1`
 );
