@@ -1,0 +1,10 @@
+CREATE TABLE `Royal_rangers.yy_mm_dd_ch` AS ( --For example, the table for January 3, 2024 would be 24_01_03_ch
+  Ch_num INT64, --Creating Ch_master_final is essential before creating this table
+  Attended_5 INT64,    --Column name, then underscore, then max point value for the column
+  On_time_5 INT64,
+  Offering_10 INT64,
+  Book_10 INT64,       --We keep the books in our classroom, so if the child attends, this is an automatic 10 points
+  Bible_10 INT64,
+  Uniform_5 INT64,
+  Brought_guest_5 INT64
+);
