@@ -1,5 +1,8 @@
 # Here's what is used for chartered children when new info is added
-# Obviously, `Royal_rangers.y1_y2_ch_l1` must be created first
+# `Royal_rangers.y1_y2_ch_l1` is created in Chartered_master_initial
+# `Royal_rangers.y1_y2_ch_list` is created in Ch_master_final_first
+# Both must be created before this one
+
 
 INSERT INTO `Royal_rangers.y1_y2_ch_l1`
 VALUES
