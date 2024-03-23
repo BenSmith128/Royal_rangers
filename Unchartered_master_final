@@ -1,7 +1,7 @@
 # This table is created AFTER master_initial
 # It will most likely need to be updated weekly because of the row number
 
-CREATE TABLE `Royal_rangers.year_unchartered_list` AS (
+CREATE TABLE `Royal_rangers.fromyear_toyear_unchartered_list` AS (
   SELECT
     ROW_NUMBER() OVER (ORDER BY First_att, Unch_name) AS Unch_num,
     Unch_name,
