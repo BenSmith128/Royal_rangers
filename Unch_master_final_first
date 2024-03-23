@@ -6,5 +6,5 @@ CREATE TABLE `Royal_rangers.fromyear_toyear_unchartered_list` AS (
     ROW_NUMBER() OVER (ORDER BY First_att, Unch_name) AS Unch_num,
     Unch_name,
     First_att
-  FROM `Royal_rangers.year_unch_o1`
+  FROM `Royal_rangers.year_unch_l1`
 )
