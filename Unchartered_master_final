@@ -1,4 +1,9 @@
+# This table is created AFTER master_initial
+
 CREATE TABLE `Royal_rangers.year_unchartered_list` AS (
   SELECT
-  FROM 
+    ROW_NUMBER() OVER (ORDER BY First_att, Unch_name) AS Unch_num,
+    Unch_name,
+    First_att
+  FROM `Royal_rangers.year_unch_o1`
 )
