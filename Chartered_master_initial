@@ -1,4 +1,4 @@
-CREATE TABLE `Royal_rangers.year_ch_o1` (
+CREATE TABLE `Royal_rangers.fromyear_toyear_ch_o1` (
   Ch_name STRING,  -- all names
   Ch_date DATE
 )
