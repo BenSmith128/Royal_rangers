@@ -1,6 +1,6 @@
-# This table must be created
+# This table must be created first
 
-CREATE TABLE `Royal_rangers.fromyear_toyear_unch_l1` (
-  First_att DATE,
+CREATE TABLE `Royal_rangers.y1_y2_un_l1` ( --For example, in the year 2023-2024, this table would be '23_24_un_l1'
+  First_att DATE,   -- date first attended
   Unch_name STRING  -- all names
 )
