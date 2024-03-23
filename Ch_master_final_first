@@ -6,5 +6,5 @@ CREATE TABLE `Royal_rangers.fromyear_toyear_chartered_list` AS (
     ROW_NUMBER() OVER (ORDER BY Ch_date, Ch_name) AS Ch_num,
     Ch_name,
     Ch_date
-  FROM `Royal_rangers.fromyear_toyear_ch_o1`
+  FROM `Royal_rangers.fromyear_toyear_ch_l1`
 );
