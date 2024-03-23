@@ -1,4 +1,4 @@
-# Here's what is used for chartered children after you've observed changes
+# Here's what is used for chartered children after changes are observed
 
 CREATE TABLE `Royal_rangers.fromyear_toyear_ch_l2` AS (
   SELECT
