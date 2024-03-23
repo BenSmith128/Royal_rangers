@@ -1,4 +1,10 @@
-# Here's what is used for chartered children after changes are observed
+# Here's what is used for chartered children when new info is added
+# Obviously, `Royal_rangers.y1_y2_ch_l1` must be created first
+
+INSERT INTO `Royal_rangers.y1_y2_ch_l1`
+VALUES
+  ('First Last', DATE 'YYYY-MM-DD'), --For example, ('Bob Smith', DATE '2024-01-03')
+  ('First Last', DATE 'YYYY-MM-DD');
 
 CREATE TABLE `Royal_rangers.y1_y2_ch_l2` AS ( --For example, in the 2023-24 year, this table would be '23_24_ch_l2'
   SELECT
