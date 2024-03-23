@@ -15,3 +15,5 @@ CREATE TABLE `Royal_rangers.fromyear_toyear_unchartered_list` AS (
     *
   FROM `Royal_rangers.fromyear_toyear_unch_l2`
 );
+
+DROP TABLE `Royal_rangers.fromyear_toyear_unch_l2`;
