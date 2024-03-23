@@ -1,3 +1,5 @@
+# This table must be created
+
 CREATE TABLE `Royal_rangers.fromyear_toyear_unch_l1` (
   First_att DATE,
   Unch_name STRING  -- all names
