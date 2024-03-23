@@ -1,0 +1,10 @@
+# This works for initial creation only.
+# After the first week, there is longer code. 
+
+CREATE TABLE `Royal_rangers.fromyear_toyear_chartered_list` AS (
+  SELECT
+    ROW_NUMBER() OVER (ORDER BY Ch_date, Ch_name) AS Ch_num,
+    Ch_name,
+    Ch_date
+  FROM `Royal_rangers.fromyear_toyear_ch_o1`
+);
