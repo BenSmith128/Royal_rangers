@@ -1,4 +1,4 @@
-CREATE TABLE `Royal_rangers.year_unch_o1` (
+CREATE TABLE `Royal_rangers.fromyear_toyear_unch_o1` (
   First_att DATE,
   Unch_name STRING  -- all names
 )
