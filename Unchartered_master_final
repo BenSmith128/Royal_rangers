@@ -1,0 +1,4 @@
+CREATE TABLE `Royal_rangers.year_unchartered_list` AS (
+  SELECT
+  FROM 
+)
