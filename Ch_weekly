@@ -1,0 +1,15 @@
+# This is the fourth step that must be completed
+# The first step is found in Chartered_master_initial
+# The second step is in Ch_master_final_first
+# The third step is in Ch_master_final_following
+
+CREATE TABLE `Royal_rangers.yy_mm_dd_ch` AS ( --For example, the table for January 3, 2024 would be 24_01_03_ch
+  Ch_num INT64,  --This step requires Ch_master_final_following and all tables before it
+  Attended_5 INT64,  --Column name, then underscore, then max point value for the column
+  On_time_5 INT64,
+  Offering_10 INT64,
+  Book_10 INT64,  --We keep the books in our classroom, so if the child attends, this is an automatic 10 points
+  Bible_10 INT64,
+  Uniform_5 INT64,
+  Brought_guest_5 INT64
+);
