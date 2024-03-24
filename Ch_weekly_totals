@@ -14,7 +14,7 @@ CREATE TABLE `Royal_rangers.yy_mm_dd_ch_t` AS (  --For example, the table for Ja
   SELECT
     l.Ch_name,
     l.Ch_date,
-    w.Attended_5 + w.Bible_10 + w.Book_10 + w.Brought_guest_5 + w.Offering_10 + w.Uniform_5 AS Total_YY_MM_DD  --For example, 'Total_24_01_31'
+    w.Attended_5 + w.Bible_10 + w.Book_10 + w.Brought_guest_5 + w.Offering_10 + w.On_time_5 + w.Uniform_5 AS Total_YY_MM_DD  --For example, 'Total_24_01_31'
   FROM `Royal_rangers.yy_mm_dd_ch` w
   JOIN `Royal_rangers.y1_y2_ch_list` l
   ON w.Ch_num = l.Ch_num
