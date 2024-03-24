@@ -5,12 +5,12 @@
 INSERT INTO `Royal_rangers.y1_y2_un_l1`
 VALUES
   (DATE 'YYYY-MM-DD', 'First Last'), -- For example, (DATE '2024-01-03', 'Bob Smith')
-  (DATE 'YYYY-MM-DD', 'First Last')
+  (DATE 'YYYY-MM-DD', 'First Last');
 
 CREATE TABLE `Royal_rangers.y1_y2_un_list` AS ( --For example, in the year 2023-2024, this table would be '23_24_un_list'
   SELECT
-    ROW_NUMBER() OVER (ORDER BY First_att, Un_name) AS Unch_num,
+    ROW_NUMBER() OVER (ORDER BY First_att, Un_name) AS Un_num,
     Un_name,
     First_att
   FROM `Royal_rangers.y1_y2_un_l1`
-)
+);
