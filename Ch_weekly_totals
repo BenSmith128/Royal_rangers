@@ -1,0 +1,28 @@
+# This is the fifth step needed for registered children
+# Except for the week (or so) before Assembly, this is the last one needed
+# Step 1, Chartered_master_initial
+# Step 2, Ch_master_final_first
+# Step 3, Ch_master_final_following
+# Step 4, Chartered_weekly (you'll see why)
+
+INSERT INTO `Royal_rangers.yy_mm_dd_ch`
+VALUES
+  (1, 5, 5, 10, 10, 10, 5, 5),  --Perfect week
+  (2, 0, 0, 0, 0, 0, 0, 0);  --No show
+
+CREATE TABLE `Royal_rangers.yy_mm_dd_ch_t` AS (  --For example, the table for January 31, 2024 would be '24_01_31_ch_t'
+  SELECT
+    l.Ch_name,
+    l.Ch_date,
+    w.Attended_5 + w.Bible_10 + w.Book_10 + w.Brought_guest_5 + w.Offering_10 + w.Uniform_5 AS Total_YY_MM_DD  --For example, 'Total_24_01_31'
+  FROM `Royal_rangers.yy_mm_dd_ch` w
+  JOIN `Royal_rangers.y1_y2_ch_list` l
+  ON w.Ch_num = l.Ch_num
+);
+
+# Then, just because I like seeing things this way,
+
+SELECT
+  *
+FROM `Royal_rangers.yy_mm_dd_ch_t`
+ORDER BY Total_YY_MM_DD DESC, Ch_name;
