@@ -1,0 +1,28 @@
+# This is the fifth step needed for unregistered children
+# Except for the week (or so) before Assembly, this is the last one needed
+# Step 1, Unchartered_master_initial
+# Step 2, Un_master_final_first
+# Step 3, Un_master_final_following
+# Step 4, Unchartered_weekly (you'll see why)
+
+INSERT INTO `Royal_rangers.yy_mm_dd_un`
+VALUES
+  (1, 5, 5, 10, 10, 5),  --Perfect week
+  (2, 0, 0, 0, 0, 0);  --No show
+
+CREATE TABLE `Royal_rangers.yy_mm_dd_un_t` AS (  --For example, the table for January 31, 2024 would be '24_01_31_un_t'
+  SELECT
+    l.Un_name,
+    l.Un_date,
+    w.Attended_5 + w.Bible_10 + w.Brought_guest_5 + w.Offering_10 + w.On_time_5 AS Total_YY_MM_DD  --For example, 'Total_24_01_31'
+  FROM `Royal_rangers.yy_mm_dd_un` w
+  JOIN `Royal_rangers.y1_y2_un_list` l
+  ON w.Un_num = l.Un_num
+);
+
+# I may add this: I may not. Unregistered children usually aren't too committed.
+
+SELECT
+  *
+FROM `Royal_rangers.yy_mm_dd_un_t`
+ORDER BY Total_YY_MM_DD DESC, Un_name;
