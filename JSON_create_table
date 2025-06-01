@@ -1,0 +1,30 @@
+[
+  {
+    "name": "KID_S_NAME"
+    "type": "STRING"
+  },
+  {
+    "name": "Attendance"
+    "type": "INTEGER"
+  },
+  {
+    "name": "On_Time"
+    "type": "INTEGER"
+  },
+  {
+    "name": "Offering"
+    "type": "INTEGER"
+  },
+  {
+    "name": "Book"
+    "type": "INTEGER"
+  },
+  {
+    "name": "Bible"
+    "type": "INTEGER"
+  },
+  {
+    "name": "Uniform"
+    "type": "INTEGER"
+  }
+]
