@@ -1,0 +1,17 @@
+SELECT
+  KID_S_NAME AS Kids_name,
+  SUM(COALESCE(CAST(Attendance AS INT64), 0)
+    + COALESCE(CAST(On_Time AS INT64), 0)
+    + COALESCE(CAST(Offering AS INT64), 0)
+    + COALESCE(CAST(Book AS INT64), 0)
+    + COALESCE(CAST(Bible AS INT64), 0)
+    + COALESCE(CAST(Uniform AS INT64), 0))
+      AS Total_points
+FROM `project_file.royal_rangers.ab_w1`  --'ab' is the abbreviation of the descriptive badge, and 'w1' means it's the first week
+GROUP BY
+  Kids_name
+HAVING
+  Total_points > 0
+ORDER BY
+  Total_points DESC,
+  Kids_name;
