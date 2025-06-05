@@ -1,30 +1,18 @@
 [
   {
-    "name": "KID_S_NAME",
+    "name": "Name",
     "type": "STRING"
   },
   {
-    "name": "Attendance",
+    "name": "Total_points",
     "type": "INTEGER"
   },
   {
-    "name": "On_Time",
-    "type": "INTEGER"
+    "name": "Badge_week",
+    "type": "STRING"
   },
   {
-    "name": "Offering",
-    "type": "INTEGER"
-  },
-  {
-    "name": "Book",
-    "type": "INTEGER"
-  },
-  {
-    "name": "Bible",
-    "type": "INTEGER"
-  },
-  {
-    "name": "Uniform",
-    "type": "INTEGER"
+    "name": "Class_date",
+    "type": "DATE"
   }
 ]
