@@ -4,15 +4,23 @@
     "type": "STRING"
   },
   {
-    "name": "Total_points",
+    "name": "Reg_n",
     "type": "INTEGER"
   },
   {
-    "name": "Badge_week",
-    "type": "STRING"
+    "name": "Total_pts",
+    "type": "INTEGER"
   },
   {
     "name": "Class_date",
     "type": "DATE"
+  },
+  {
+    "name": "Animal_badge",
+    "type": "STRING"
+  },
+  {
+    "name": "Desc_badge",
+    "type": "STRING"
   }
 ]
