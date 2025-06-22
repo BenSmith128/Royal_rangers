@@ -1,3 +1,7 @@
+# This is the list I want to create every week
+# I want to print it off and write on it
+
+
 SELECT
     Boy_s_name,
     Reg_n,
@@ -5,7 +9,7 @@ SELECT
 FROM
     `Royal_Rangers.Elk`
 WHERE
-    Class_date = 'YYYY-MM-DD'   --For example, '2024-09-01'
+    Class_date = 'YYYY-MM-DD'   --Latest date. For example, '2024-09-01'
 ORDER BY
     CASE WHEN Reg_n IS NOT NULL THEN 0 ELSE 1 END,
     Boy_s_name ASC;
