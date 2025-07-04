@@ -1,6 +1,0 @@
-# This is the first step, the first table to be created
-
-CREATE TABLE `Royal_rangers.y1_y2_ch_l1` ( --For example, for the 2023-24 year, this table would be '23_24_ch_l1'
-  Ch_name STRING,  -- all names
-  Ch_date DATE
-)

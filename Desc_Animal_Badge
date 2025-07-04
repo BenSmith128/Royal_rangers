@@ -1,0 +1,21 @@
+## Need the descriptive badge? Use the inner, upper query.
+## Need the animal badge? Use the entire query.
+
+WITH a_bdg AS (
+  SELECT
+    Boy_s_name,
+    COUNT(Desc_badge) AS Times_att,
+    Desc_badge,
+    Animal_badge
+  FROM `Royal_Rangers.Elk`
+  GROUP BY Boy_s_name, Desc_badge, Animal_badge
+  HAVING COUNT(Desc_badge) > 1
+)
+
+SELECT
+  Boy_s_name,
+  COUNT(Boy_s_name) AS Get_badge,
+  Animal_badge
+FROM a_bdg
+GROUP BY Boy_s_name, Animal_badge
+HAVING COUNT(Boy_s_name) = 4:
