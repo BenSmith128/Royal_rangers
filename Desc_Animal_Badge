@@ -7,7 +7,7 @@ WITH a_bdg AS (
     COUNT(Desc_badge) AS Times_att,
     Desc_badge,
     Animal_badge
-  FROM `Royal_Rangers.Elk`
+  FROM `your_table`
   GROUP BY Boy_s_name, Desc_badge, Animal_badge
   HAVING COUNT(Desc_badge) > 1
 )
@@ -18,4 +18,4 @@ SELECT
   Animal_badge
 FROM a_bdg
 GROUP BY Boy_s_name, Animal_badge
-HAVING COUNT(Boy_s_name) = 4:
+HAVING COUNT(Boy_s_name) = 4;
