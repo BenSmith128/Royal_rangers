@@ -1,0 +1,127 @@
+# Top students by month
+# May be more than 5 students
+# Try to make every month unique
+# It may motivate students to improve!
+
+-- CTE Month 1
+
+WITH R_m1 AS (
+    SELECT
+        Boy_s_name,
+        RANK() OVER (ORDER BY SUM(Total_pts) DESC) AS R_pts,
+        RANK() OVER (ORDER BY COUNT(Boy_s_name) DESC) AS R_att,
+        'November' AS Month, -- Changed month to November
+        1 AS M_num
+    FROM
+        your_table -- Change table name
+    WHERE
+        FORMAT_DATE('%m', Class_date) = '11' -- Filters for November
+    GROUP BY
+        Boy_s_name
+),
+
+-- CTE Month 2
+
+R_m2 AS (
+    SELECT
+        Boy_s_name,
+        RANK() OVER (ORDER BY SUM(Total_pts) DESC) AS R_pts,
+        RANK() OVER (ORDER BY COUNT(Boy_s_name) DESC) AS R_att,
+        'December' AS Month, -- Changed month to December
+        2 AS M_num
+    FROM
+        your_table -- Change table name
+    WHERE
+        FORMAT_DATE('%m', Class_date) = '12' -- Filters for December
+    GROUP BY
+        Boy_s_name
+),
+
+-- CTE Month 3
+
+R_m3 AS (
+    SELECT
+        Boy_s_name,
+        RANK() OVER (ORDER BY SUM(Total_pts) DESC) AS R_pts,
+        RANK() OVER (ORDER BY COUNT(Boy_s_name) DESC) AS R_att,
+        'January' AS Month, -- Changed month to January
+        3 AS M_num
+    FROM
+        your_table -- Change table name
+    WHERE
+        FORMAT_DATE('%m', Class_date) = '01' -- Filters for January
+    GROUP BY
+        Boy_s_name
+),
+
+-- CTE Month 4 (Ram only)
+
+R_m4 AS (
+    SELECT
+        Boy_s_name,
+        RANK() OVER (ORDER BY SUM(Total_pts) DESC) AS R_pts,
+        RANK() OVER (ORDER BY COUNT(Boy_s_name) DESC) AS R_att,
+        'February' AS Month, -- Changed month to February
+        4 AS M_num
+    FROM
+        your_table -- Change table name
+    WHERE
+        FORMAT_DATE('%m', Class_date) = '02' -- Filters for February
+    GROUP BY
+        Boy_s_name
+)
+
+-- Results Month 1
+
+SELECT
+    Boy_s_name,
+    (R_pts + R_att) / 2.0 AS R_avg,
+    Month,
+    M_num
+FROM
+    R_m1
+GROUP BY Boy_s_name, R_avg, Month, M_num
+HAVING R_avg < 5
+
+-- Results Month 2
+
+UNION ALL
+
+SELECT
+    Boy_s_name,
+    (R_pts + R_att) / 2.0 AS R_avg,
+    Month,
+    M_num
+FROM
+    R_m2
+GROUP BY Boy_s_name, R_avg, Month, M_num
+HAVING R_avg < 5
+
+--Results Month 3
+
+UNION ALL
+
+SELECT
+    Boy_s_name,
+    (R_pts + R_att) / 2.0 AS R_avg,
+    Month,
+    M_num
+FROM
+    R_m3
+GROUP BY Boy_s_name, R_avg, Month, M_num
+HAVING R_avg < 5
+
+-- Results Month 4
+
+UNION ALL
+
+SELECT
+    Boy_s_name,
+    (R_pts + R_att) / 2.0 AS R_avg,
+    Month,
+    M_num
+FROM
+    R_m4
+GROUP BY Boy_s_name, R_avg, Month, M_num
+HAVING R_avg < 5
+ORDER BY M_num ASC, R_avg ASC;
