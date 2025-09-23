@@ -8,9 +8,9 @@ WITH nw AS (
     Boy_s_name,
     Class_date
   FROM
-    `Royal_Rangers.Antelope`
+    `your_table`
   WHERE
-    Class_date > '2025-09-01'
+    Class_date > '2025-09-01'    -- Past 2 or 3 weeks
 )
 
 SELECT DISTINCT
