@@ -1,5 +1,11 @@
 # This is the list I want to create every week
 # I want to print it off and write on it
+# Connect to Google Sheets
+# Copy to Extracts
+# Copy to Sheet1
+# Expand table to 20 rows
+# Boy_s_name 429 wide
+# Add 'RR Kindergarten YYYY/MM/DD' to bottom, under last name column
 
 
 WITH nw AS (
