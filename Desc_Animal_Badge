@@ -1,21 +1,36 @@
 ## Need the descriptive badge? Use the inner, upper query.
 ## Need the animal badge? Use the entire query.
 
-WITH a_bdg AS (
+WITH a_1 AS (
   SELECT
     Boy_s_name,
     COUNT(Desc_badge) AS Times_att,
     Desc_badge,
     Animal_badge
   FROM `your_table`
+  WHERE Desc_badge <> 'Church History'  -- Special line for unique two-week badge
   GROUP BY Boy_s_name, Desc_badge, Animal_badge
   HAVING COUNT(Desc_badge) > 1
+
+-- Special clause for unique two-week badge
+
+  UNION ALL
+
+  SELECT
+    Boy_s_name,
+    COUNT(Desc_badge) AS Times_att,
+    Desc_badge,
+    Animal_badge
+  FROM `your_table`
+  WHERE Desc_badge = 'Church History'
+  GROUP BY Boy_s_name, Desc_badge, Animal_badge
+  HAVING COUNT(Desc_badge) > 0
 )
 
 SELECT
   Boy_s_name,
   COUNT(Boy_s_name) AS Get_badge,
   Animal_badge
-FROM a_bdg
+FROM a_1
 GROUP BY Boy_s_name, Animal_badge
-HAVING COUNT(Boy_s_name) = 4;
+ORDER BY Get_badge DESC, Boy_s_name ASC;
