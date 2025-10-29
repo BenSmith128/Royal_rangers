@@ -1,0 +1,104 @@
+# Here's a shopping list style for badges per child
+# It needs testing
+
+
+
+WITH a_1 AS (
+    -- Badge 1: Church Helper
+    SELECT
+        Boy_s_name,
+        'Church Helper' AS badge1,
+        CAST(NULL AS STRING) AS badge2, -- Use NULL
+        CAST(NULL AS STRING) AS badge3, -- Use NULL
+        CAST(NULL AS STRING) AS badge4  -- Use NULL
+    FROM `your_table
+    WHERE Desc_badge = 'Church Helper'
+    GROUP BY 1
+    HAVING COUNT(Desc_badge) > 1
+
+    UNION ALL
+
+    -- Badge 2: Joyful Noise
+    SELECT
+        Boy_s_name,
+        CAST(NULL AS STRING) AS badge1, -- Use NULL
+        'Joyful Noise' AS badge2,
+        CAST(NULL AS STRING) AS badge3, -- Use NULL
+        CAST(NULL AS STRING) AS badge4  -- Use NULL
+    FROM `your_table
+    WHERE Desc_badge = 'Joyful Noise'
+    GROUP BY 1
+    HAVING COUNT(Desc_badge) > 1
+
+    UNION ALL
+
+    -- Badge 3: Church History
+    SELECT
+        Boy_s_name,
+        CAST(NULL AS STRING) AS badge1, -- Use NULL
+        CAST(NULL AS STRING) AS badge2, -- Use NULL
+        'Church History' AS badge3,
+        CAST(NULL AS STRING) AS badge4  -- Use NULL
+    FROM `your_table
+    WHERE Desc_badge = 'Church History'
+    GROUP BY 1
+    HAVING COUNT(Desc_badge) > 0
+
+    UNION ALL
+
+    -- Badge 4: Sunday School
+    SELECT
+        Boy_s_name,
+        CAST(NULL AS STRING) AS badge1, -- Use NULL
+        CAST(NULL AS STRING) AS badge2, -- Use NULL
+        CAST(NULL AS STRING) AS badge3, -- Use NULL
+        'Sunday School' AS badge4
+    FROM `your_table
+    WHERE Desc_badge = 'Sunday School'
+    GROUP BY 1
+    HAVING COUNT(Desc_badge) > 1
+),
+
+a_2 AS (
+    -- Aggregation and Master Badge Calculation
+    SELECT
+        Boy_s_name,
+        MAX(a_1.badge1) AS b1,
+        MAX(a_1.badge2) AS b2,
+        MAX(a_1.badge3) AS b3,
+        MAX(a_1.badge4) AS b4,
+
+        -- MB is NULL unless ALL four primary badges are present (NOT NULL)
+        CASE
+            WHEN
+                MAX(a_1.badge1) IS NOT NULL AND
+                MAX(a_1.badge2) IS NOT NULL AND
+                MAX(a_1.badge3) IS NOT NULL AND
+                MAX(a_1.badge4) IS NOT NULL
+            THEN 'Antelope'
+            ELSE NULL -- Explicitly assign NULL if condition is not met
+        END AS mb
+    FROM a_1
+    GROUP BY Boy_s_name
+)
+
+SELECT
+    -- Final Concatenation with TRIM to handle any potential leading comma
+    t1.Boy_s_name || ': ' || 
+    TRIM(
+        LEADING ', ' FROM 
+        CONCAT(
+            -- 1. First badge: IFNULL replaced with simple alias, as CONCAT handles NULLs
+            t1.b1,
+            
+            -- 2-5. Subsequent badges: use IFNULL(CONCAT(', ', badge), '')
+            IFNULL(CONCAT(', ', t1.b2), ''),
+            IFNULL(CONCAT(', ', t1.b3), ''),
+            IFNULL(CONCAT(', ', t1.b4), ''),
+            IFNULL(CONCAT(', ', t1.mb), '')
+        )
+    ) AS badge_list
+FROM 
+    a_2 AS t1 -- Use alias t1 for a_2 for cleaner code
+ORDER BY 
+    t1.Boy_s_name ASC;
