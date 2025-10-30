@@ -83,21 +83,7 @@ a_2 AS (
 )
 
 SELECT
-    -- Final Concatenation with TRIM to handle any potential leading comma
-    t1.Boy_s_name || ': ' || 
-    TRIM(
-        LEADING ', ' FROM 
-        CONCAT(
-            -- 1. First badge: IFNULL replaced with simple alias, as CONCAT handles NULLs
-            t1.b1,
-            
-            -- 2-5. Subsequent badges: use IFNULL(CONCAT(', ', badge), '')
-            IFNULL(CONCAT(', ', t1.b2), ''),
-            IFNULL(CONCAT(', ', t1.b3), ''),
-            IFNULL(CONCAT(', ', t1.b4), ''),
-            IFNULL(CONCAT(', ', t1.mb), '')
-        )
-    ) AS badge_list
+    *
 FROM 
     a_2 AS t1 -- Use alias t1 for a_2 for cleaner code
 ORDER BY 
