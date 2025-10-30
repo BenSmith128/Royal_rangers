@@ -8,7 +8,7 @@
 WITH R_m1 AS (
     SELECT
         Boy_s_name,
-        RANK() OVER (ORDER BY SUM(Total_pts) DESC) AS R_pts,
+        RANK() OVER (ORDER BY SUM(Total_points) DESC) AS R_pts,
         RANK() OVER (ORDER BY COUNT(Boy_s_name) DESC) AS R_att,
         'November' AS Month, -- Changed month to November
         1 AS M_num
@@ -25,7 +25,7 @@ WITH R_m1 AS (
 R_m2 AS (
     SELECT
         Boy_s_name,
-        RANK() OVER (ORDER BY SUM(Total_pts) DESC) AS R_pts,
+        RANK() OVER (ORDER BY SUM(Total_points) DESC) AS R_pts,
         RANK() OVER (ORDER BY COUNT(Boy_s_name) DESC) AS R_att,
         'December' AS Month, -- Changed month to December
         2 AS M_num
@@ -42,7 +42,7 @@ R_m2 AS (
 R_m3 AS (
     SELECT
         Boy_s_name,
-        RANK() OVER (ORDER BY SUM(Total_pts) DESC) AS R_pts,
+        RANK() OVER (ORDER BY SUM(Total_points) DESC) AS R_pts,
         RANK() OVER (ORDER BY COUNT(Boy_s_name) DESC) AS R_att,
         'January' AS Month, -- Changed month to January
         3 AS M_num
@@ -59,7 +59,7 @@ R_m3 AS (
 R_m4 AS (
     SELECT
         Boy_s_name,
-        RANK() OVER (ORDER BY SUM(Total_pts) DESC) AS R_pts,
+        RANK() OVER (ORDER BY SUM(Total_points) DESC) AS R_pts,
         RANK() OVER (ORDER BY COUNT(Boy_s_name) DESC) AS R_att,
         'February' AS Month, -- Changed month to February
         4 AS M_num
