@@ -13,19 +13,39 @@ WITH vwc AS (
         ),
         ' '
       )
-    ) AS word_count
+    ) AS word_count,
+    SUM(
+      ARRAY_LENGTH(
+        SPLIT(
+          REGEXP_REPLACE(
+            TRIM(Verse_KJV),
+            r'\s+',
+            ' '
+          ),
+          ' '
+        )
+      )
+    ) OVER () AS total_words
   FROM
     `your_table
+),
+
+cs AS (
+  SELECT
+    *,
+    SUM(word_count) OVER (ORDER BY word_count DESC, Oal_v_num ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_word_sum,
+    total_words / 5 AS daily_word_target
+  FROM
+    vwc
 )
 
 SELECT
   Oal_v_num,
-  vwc.Verse_KJV,
+  cs.Verse_KJV,
   word_count,
-  NTILE(5) OVER (ORDER BY word_count DESC) AS day_num
+  CEIL(running_word_sum / daily_word_target) AS day_number
 FROM
-  vwc
+  cs
 ORDER BY
-  day_num ASC,
-  word_count DESC,
-  Oal_v_num ASC
+  day_number ASC,
+  word_count DESC
