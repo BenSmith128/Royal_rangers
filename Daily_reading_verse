@@ -1,0 +1,8 @@
+## Sorting by verse number
+
+SELECT
+  Oal_v_num,
+  Verse_KJV,
+  NTILE(5) OVER (ORDER BY Oal_v_num) AS Day_num
+FROM `your_table
+ORDER BY Day_num, Oal_v_num
