@@ -9,6 +9,7 @@ WITH vcc AS (
   FROM
     `your_table
 ),
+
 cs AS (
   SELECT
     *,
