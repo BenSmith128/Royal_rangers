@@ -1,0 +1,22 @@
+# Verses sorted by character count, shortest to longest
+
+WITH vcc AS (
+  SELECT
+    Oal_v_num,
+    Verse_KJV,
+    CHARACTER_LENGTH(Verse_KJV) AS char_count
+  FROM
+    `your_table
+)
+
+SELECT
+  vcc.Oal_v_num,
+  vcc.Verse_KJV,
+  vcc.char_count,
+  NTILE(5) OVER (ORDER BY char_count) AS day_num
+FROM
+  vcc
+ORDER BY
+  day_num ASC,
+  vcc.char_count ASC,
+  vcc.Oal_v_num ASC
