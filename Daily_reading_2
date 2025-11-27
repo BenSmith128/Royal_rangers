@@ -43,9 +43,9 @@ SELECT
   Oal_v_num,
   cs.Verse_KJV,
   word_count,
-  CEIL(running_word_sum / daily_word_target) AS day_number
+  CEIL(running_word_sum / daily_word_target) AS d_n
 FROM
   cs
 ORDER BY
-  day_number ASC,
+  d_n ASC,
   word_count DESC
