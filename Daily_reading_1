@@ -4,19 +4,27 @@ WITH vcc AS (
   SELECT
     Oal_v_num,
     Verse_KJV,
-    CHARACTER_LENGTH(Verse_KJV) AS char_count
+    CHARACTER_LENGTH(Verse_KJV) AS char_count,
+    SUM(CHARACTER_LENGTH(Verse_KJV)) OVER () AS total_chars
   FROM
     `your_table
+),
+cs AS (
+  SELECT
+    *,
+    SUM(char_count) OVER (ORDER BY char_count, Verse_KJV ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_char_sum,
+    total_chars / 5 AS daily_char_target
+  FROM
+    vcc
 )
 
 SELECT
-  vcc.Oal_v_num,
-  vcc.Verse_KJV,
-  vcc.char_count,
-  NTILE(5) OVER (ORDER BY char_count) AS day_num
+  Oal_v_num,
+  Verse_KJV,
+  char_count,
+  CEIL(running_char_sum / daily_char_target) AS day_number
 FROM
-  vcc
+  cs
 ORDER BY
-  day_num ASC,
-  vcc.char_count ASC,
-  vcc.Oal_v_num ASC
+  day_number ASC,
+  char_count ASC;
