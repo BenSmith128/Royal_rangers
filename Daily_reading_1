@@ -1,0 +1,31 @@
+# Verses sorted by words, shortest to longest
+
+WITH vwc AS (
+  SELECT
+    Oal_v_num,
+    Verse_KJV,
+    ARRAY_LENGTH(
+      SPLIT(
+        REGEXP_REPLACE(
+          TRIM(Verse_KJV),
+          r'\s+',
+          ' '
+        ),
+        ' '
+      )
+    ) AS word_count
+  FROM
+    `your_table
+)
+
+SELECT
+  Oal_v_num,
+  vwc.Verse_KJV,
+  word_count,
+  NTILE(5) OVER (ORDER BY word_count) AS day_num
+FROM
+  vwc
+ORDER BY
+  day_num ASC,
+  word_count ASC,
+  Oal_v_num ASC
