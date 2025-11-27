@@ -1,4 +1,4 @@
-## Sorting by verse number
+# Sorting by verse number
 
 SELECT
   Oal_v_num,
