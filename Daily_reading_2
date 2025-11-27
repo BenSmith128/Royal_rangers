@@ -1,4 +1,4 @@
-# Verses sorted by words, shortest to longest
+# Verses sorted by words, longest to shortest
 
 WITH vwc AS (
   SELECT
@@ -22,10 +22,10 @@ SELECT
   Oal_v_num,
   vwc.Verse_KJV,
   word_count,
-  NTILE(5) OVER (ORDER BY word_count) AS day_num
+  NTILE(5) OVER (ORDER BY word_count DESC) AS day_num
 FROM
   vwc
 ORDER BY
   day_num ASC,
-  word_count ASC,
+  word_count DESC,
   Oal_v_num ASC
