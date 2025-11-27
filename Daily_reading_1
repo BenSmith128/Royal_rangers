@@ -23,9 +23,9 @@ SELECT
   Oal_v_num,
   Verse_KJV,
   char_count,
-  CEIL(running_char_sum / daily_char_target) AS day_number
+  CEIL(running_char_sum / daily_char_target) AS d_n
 FROM
   cs
 ORDER BY
-  day_number ASC,
+  d_n ASC,
   char_count ASC;
