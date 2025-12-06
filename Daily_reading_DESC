@@ -1,35 +1,34 @@
 # Verses sorted by character and word count average, longest to shortest
 
-CREATE TABLE `average
-AS
 WITH cw_data AS (
     SELECT
-        Oal_v_num,
-        Verse_KJV,
-        CHARACTER_LENGTH(Verse_KJV) AS char_count,
-        ARRAY_LENGTH(
-            SPLIT(
-                REGEXP_REPLACE(TRIM(Verse_KJV), r'\s+', ' '),
-                ' '
-            )
-        ) AS word_count,
-        (CHARACTER_LENGTH(Verse_KJV) + ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(Verse_KJV), r'\s+', ' '), ' '))) / 2 AS cw_avg,
-        SUM(CHARACTER_LENGTH(Verse_KJV)) OVER () AS total_chars,
-        SUM(ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(Verse_KJV), r'\s+', ' '), ' '))) OVER () AS total_words,
-        SUM((CHARACTER_LENGTH(Verse_KJV) + ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(Verse_KJV), r'\s+', ' '), ' '))) / 2)
-            OVER (ORDER BY (CHARACTER_LENGTH(Verse_KJV) + ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(Verse_KJV), r'\s+', ' '), ' '))) / 2 DESC, Oal_v_num DESC) 
+        sh.Oal_v_num,
+        sh.Verse_KJV,
+        (CHARACTER_LENGTH(sh.Verse_KJV) + ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(sh.Verse_KJV), r'\s+', ' '), ' '))) / 2 AS cw_avg,
+        SUM(CHARACTER_LENGTH(sh.Verse_KJV)) OVER () AS total_chars,
+        SUM(ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(sh.Verse_KJV), r'\s+', ' '), ' '))) OVER () AS total_words,
+        SUM((CHARACTER_LENGTH(sh.Verse_KJV) + ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(sh.Verse_KJV), r'\s+', ' '), ' '))) / 2)
+            OVER (ORDER BY (CHARACTER_LENGTH(sh.Verse_KJV) + ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(sh.Verse_KJV), r'\s+', ' '), ' '))) / 2 DESC, sh.Oal_v_num DESC) 
             AS running_cw_sum
     FROM
-        `week
+        `short AS sh
 )
 SELECT
-    Oal_v_num,
-    cw_data.Verse_KJV,
-    cw_avg,
-    running_cw_sum,
-    (total_chars + total_words) / 2 AS total_cw,
-    ((total_chars / 7 + total_words / 7) / 2) * CEIL(running_cw_sum / ((total_chars + total_words) / 14))
-      AS daily_cw_target,
-    CEIL(running_cw_sum / ((total_chars + total_words) / 14)) AS day_number -- (Total / 7 + Total / 7) / 2 = Total / 7
+    CEIL(sh.running_cw_sum / ((sh.total_chars + sh.total_words) / 14)) AS day_number,
+    gu.B_name,
+    gu.Ch_num,
+    gu.V_num,    
+    sh.Verse_KJV,
+    sh.cw_avg,
+    sh.running_cw_sum,
+    ((sh.total_chars / 7 + sh.total_words / 7) / 2) * CEIL(sh.running_cw_sum / ((sh.total_chars + sh.total_words) / 14))
+        AS daily_cw_target,
+    (sh.total_chars + sh.total_words) / 2 AS total_cw
 FROM
-    cw_data
+    cw_data AS sh --(t1)
+LEFT JOIN
+    `guide AS gu --(t2)
+    ON sh.Oal_v_num = gu.V_oal_o
+ORDER BY
+    day_number ASC,
+    cw_avg DESC;
