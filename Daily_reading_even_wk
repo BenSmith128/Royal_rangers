@@ -1,4 +1,4 @@
-# Verses sorted by character and word count average, shortest to longest
+# Verses sorted by character and word count average, longest to shortest
 
 CREATE TABLE `average
 AS
