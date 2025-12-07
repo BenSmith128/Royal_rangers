@@ -25,9 +25,9 @@ SELECT
         AS daily_cw_target,
     (sh.total_chars + sh.total_words) / 2 AS total_cw
 FROM
-    cw_data AS sh --(t1)
+    cw_data AS sh
 LEFT JOIN
-    `guide AS gu --(t2)
+    `guide AS gu
     ON sh.Oal_v_num = gu.V_oal_o
 ORDER BY
     day_number ASC,
