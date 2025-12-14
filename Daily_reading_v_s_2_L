@@ -10,6 +10,6 @@ SELECT
   (ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(Verse_KJV), r'\s+', ' '), ' ')) + LENGTH(Verse_KJV)) / 2 AS WC_avg,
   Verse_KJV
 FROM
-  `Royal_Rangers.week3`
+  `week
 ORDER BY
   B_name, Ch_num, V_num
