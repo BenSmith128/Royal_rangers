@@ -1,0 +1,15 @@
+## This will allow import, run code, and clean data.
+## This will save a lot of time!
+
+SELECT 
+  B_name,
+  Ch_num,
+  V_num,
+  -- This removes leading digits and the following space
+  REGEXP_REPLACE(V_raw, r'^\d+\s', '') AS Verse_KJV
+FROM 
+  `Week_?
+WHERE 
+  -- This removes the blank/null rows
+  V_raw IS NOT NULL 
+  AND V_raw != ''
