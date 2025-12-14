@@ -1,0 +1,15 @@
+# Sorting by verse number
+# In the process of updating it for this week
+
+SELECT
+  B_name,
+  Ch_num,
+  V_num,
+  ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(Verse_KJV), r'\s+', ' '), ' ')) AS W_count,
+  LENGTH(Verse_KJV) AS Ch_count,
+  (ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(Verse_KJV), r'\s+', ' '), ' ')) + LENGTH(Verse_KJV)) / 2 AS WC_avg,
+  Verse_KJV
+FROM
+  `Royal_Rangers.week3`
+ORDER BY
+  B_name, Ch_num, V_num
