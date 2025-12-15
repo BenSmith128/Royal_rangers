@@ -6,7 +6,7 @@ WITH c1 AS (
         B_name,
         SUM((ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(Verse_KJV), r'\s+', ' '), ' ')) + LENGTH(Verse_KJV)) / 2) AS tot_avg
     FROM 
-        `Royal_Rangers.week3`
+        `week`
     GROUP BY 
         B_name
 ),
@@ -34,7 +34,7 @@ c3 AS (
       OVER (ORDER BY c2.B_rank ASC, c3.Ch_num ASC, c3.V_num ASC) 
       AS running_cw_sum
   FROM
-    `Royal_Rangers.week3` AS c3
+    `week` AS c3
   LEFT JOIN
     c2 ON c2.B_name = c3.B_name
 )
