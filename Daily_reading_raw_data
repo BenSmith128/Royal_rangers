@@ -2,9 +2,7 @@
 ## This will save a lot of time!
 
 SELECT 
-  B_name,
-  Ch_num,
-  V_num,
+  -- Only works if this is the only column
   -- This removes leading digits and the following space
   REGEXP_REPLACE(V_raw, r'^\d+\s', '') AS Verse_KJV
 FROM 
