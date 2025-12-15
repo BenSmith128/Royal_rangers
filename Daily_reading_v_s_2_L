@@ -1,15 +1,57 @@
 # Sorting by verse number
 # In the process of updating it for this week
 
+WITH c1 AS (
+    SELECT
+        B_name,
+        SUM((ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(Verse_KJV), r'\s+', ' '), ' ')) + LENGTH(Verse_KJV)) / 2) AS tot_avg
+    FROM 
+        `Royal_Rangers.week3`
+    GROUP BY 
+        B_name
+),
+
+c2 AS (
+  SELECT
+      RANK() OVER (ORDER BY c1.tot_avg ASC) AS B_rank,
+      c1.B_name,
+      c1.tot_avg
+  FROM
+      c1
+),
+
+c3 AS (
+  SELECT
+    c3.B_name,
+    c2.B_rank,
+    c3.Ch_num,
+    c3.V_num,
+    c3.Verse_KJV,
+    (CHARACTER_LENGTH(c3.Verse_KJV) + ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(c3.Verse_KJV), r'\s+', ' '), ' '))) / 2 AS cw_avg,
+    SUM(CHARACTER_LENGTH(c3.Verse_KJV)) OVER () AS total_chars,
+      SUM(ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(c3.Verse_KJV), r'\s+', ' '), ' '))) OVER () AS total_words,
+    SUM((CHARACTER_LENGTH(c3.Verse_KJV) + ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(c3.Verse_KJV), r'\s+', ' '), ' '))) / 2)
+      OVER (ORDER BY c2.B_rank ASC, c3.Ch_num ASC, c3.V_num ASC) 
+      AS running_cw_sum
+  FROM
+    `Royal_Rangers.week3` AS c3
+  LEFT JOIN
+    c2 ON c2.B_name = c3.B_name
+)
+
 SELECT
-  B_name,
-  Ch_num,
-  V_num,
-  ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(Verse_KJV), r'\s+', ' '), ' ')) AS W_count,
-  LENGTH(Verse_KJV) AS Ch_count,
-  (ARRAY_LENGTH(SPLIT(REGEXP_REPLACE(TRIM(Verse_KJV), r'\s+', ' '), ' ')) + LENGTH(Verse_KJV)) / 2 AS WC_avg,
-  Verse_KJV
+  CEIL(c3.running_cw_sum / ((c3.total_chars + c3.total_words) / 14)) AS d_n,
+  c3.B_name,
+  c3.B_rank,
+  c3.Ch_num,
+  c3.V_num,    
+  c3.Verse_KJV,
+  c3.cw_avg,
+  c3.running_cw_sum,
+  ((c3.total_chars / 7 + c3.total_words / 7) / 2) * CEIL(c3.running_cw_sum / ((c3.total_chars + c3.total_words) / 14))
+    AS daily_cw_target,
+  (c3.total_chars + c3.total_words) / 2 AS total_cw
 FROM
-  `week
+  c3
 ORDER BY
-  B_name, Ch_num, V_num
+  d_n, B_rank, Ch_num, V_num;
