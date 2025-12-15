@@ -16,7 +16,7 @@ WITH cw AS (
         `week
 )
 SELECT
-    CEIL(running_cw_sum / ((total_chars + total_words) / 14)) AS day_number,
+    CEIL(running_cw_sum / ((total_chars + total_words) / 14)) AS d_n,
     B_name,
     Ch_num,
     V_num,    
@@ -29,5 +29,5 @@ SELECT
 FROM
     cw
 ORDER BY
-    day_number ASC,
+    d_n ASC,
     cw_avg ASC;
