@@ -1,5 +1,5 @@
-# Sorting by verse number
-# In the process of updating it for this week
+# Keeping verses in order, sorting shortest passages to longest.
+# Each day has approximately the same number of character and word averages.
 
 WITH c1 AS (
     SELECT
