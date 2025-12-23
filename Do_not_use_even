@@ -1,4 +1,5 @@
 # Verses sorted by average word and character count, longest to shortest
+# DO NOT USE!
 
 WITH ws1 AS (
   SELECT
