@@ -1,0 +1,18 @@
+# Creating a descriptive badge based in Big Query
+
+CREATE OR REPLACE TABLE `badge AS
+WITH raw_data AS (
+  SELECT *, DATE '2025-08-13' as dt FROM `w1 UNION ALL
+  SELECT *, DATE '2025-08-20' as dt FROM `w2 UNION ALL
+  SELECT *, DATE '2025-08-27' as dt FROM `w3
+)
+SELECT 
+  boy_s_name,
+  Reg_n,
+  (COALESCE(Attendance_5,0) + COALESCE(On_time_5,0) + COALESCE(Offering_10,0) + 
+   COALESCE(Book_10,0) + COALESCE(Bible_10,0) + COALESCE(Uniform_5,0)) AS Total_Points,
+  dt AS Class_date,
+  'Antelope' AS Animal_badge,
+  'Church Helper' AS Desc_badge
+FROM raw_data
+WHERE Attendance_5 IS NOT NULL
