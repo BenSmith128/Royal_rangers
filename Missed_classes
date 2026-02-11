@@ -1,0 +1,34 @@
+# List of classes that each boy has missed
+
+WITH 
+-- Step 1: Get unique lists and EXCLUDE NULLS
+all_boys AS (
+  SELECT DISTINCT boy_s_name 
+  FROM `table -- Insert table name here
+  WHERE Boy_s_name IS NOT NULL
+),
+all_dates AS (
+  SELECT DISTINCT Class_date 
+  FROM `table -- Insert table name here
+  WHERE Class_date IS NOT NULL AND Class_date > '2025-06-01'
+),
+
+-- Step 2: Create every possible pair (Boy + Date)
+master_schedule AS (
+  SELECT 
+    b.Boy_s_name, 
+    d.Class_date
+  FROM all_boys b
+  CROSS JOIN all_dates d
+)
+
+-- Step 3: Find what's missing in the original table
+SELECT 
+  m.Boy_s_name, 
+  m.Class_date AS Missed_date
+FROM master_schedule m
+LEFT JOIN `table a --Insert table name here
+  ON m.Boy_s_name = a.Boy_s_name 
+  AND m.Class_date = a.Class_date
+WHERE a.Boy_s_name IS NULL 
+ORDER BY Boy_s_name, Missed_date;
