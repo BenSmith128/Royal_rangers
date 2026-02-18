@@ -1,34 +1,47 @@
 # List of classes that each boy has missed
+# Only counts boys that have attended in the past two classes
 
 WITH 
--- Step 1: Get unique lists and EXCLUDE NULLS
-all_boys AS (
-  SELECT DISTINCT boy_s_name 
-  FROM `table -- Insert table name here
-  WHERE Boy_s_name IS NOT NULL
-),
-all_dates AS (
+-- Step 1: Find the 2 most recent class dates in the system
+recent_dates AS (
   SELECT DISTINCT Class_date 
-  FROM `table -- Insert table name here
-  WHERE Class_date IS NOT NULL AND Class_date > '2025-06-01'
+  FROM `summary_table
+  WHERE Class_date IS NOT NULL AND Class_date > '2025-07-01'
+  ORDER BY Class_date DESC
+  LIMIT 2
 ),
 
--- Step 2: Create every possible pair (Boy + Date)
+-- Step 2: Identify boys who attended EITHER of those 2 dates
+active_boys AS (
+  SELECT DISTINCT Boy_s_name
+  FROM `summary_table --Insert table here
+  WHERE Class_date IN (SELECT Class_date FROM recent_dates)
+    AND Boy_s_name IS NOT NULL
+),
+
+-- Step 3: Get the full list of every class date ever held
+all_dates AS (
+  SELECT DISTINCT Class_date 
+  FROM `summary_table --Insert table here
+  WHERE Class_date IS NOT NULL
+),
+
+-- Step 4: Create the "Expectation" (Every active boy vs Every date)
 master_schedule AS (
   SELECT 
     b.Boy_s_name, 
     d.Class_date
-  FROM all_boys b
+  FROM active_boys b
   CROSS JOIN all_dates d
 )
 
--- Step 3: Find what's missing in the original table
+-- Step 5: Compare and find the gaps
 SELECT 
   m.Boy_s_name, 
-  m.Class_date AS Missed_date
+  m.Class_date AS missed_date
 FROM master_schedule m
-LEFT JOIN `table a --Insert table name here
-  ON m.Boy_s_name = a.Boy_s_name 
-  AND m.Class_date = a.Class_date
-WHERE a.Boy_s_name IS NULL 
-ORDER BY Boy_s_name, Missed_date;
+LEFT JOIN `summary_table a --Insert table here
+  ON m.boy_s_name = a.boy_s_name 
+  AND m.class_date = a.class_date
+WHERE a.boy_s_name IS NULL AND m.Class_date > '2025-07-01' -- It exists in the "should have" but not the "did"
+ORDER BY boy_s_name, missed_date;
