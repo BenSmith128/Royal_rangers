@@ -1,25 +1,54 @@
 # This is the list I want to create every week
 # I want to print it off and write on it
-# Connect to Google Sheets
-# Copy to Extracts
-# Copy to Sheet1
-# Expand table to 20 rows
 # Boy_s_name 429 wide
 # Add 'RR Kindergarten YYYY/MM/DD' to bottom, under last name column
 
 
-WITH nw AS (
-  SELECT
-    Reg_n,
-    Boy_s_name,
-    Class_date
-  FROM
-    `your_table`
-  WHERE
-    Class_date > '2025-09-01'    -- Past 2 or 3 weeks
+WITH base_data AS (
+  -- One-stop shop for your table data
+  SELECT Reg_n, Boy_s_name, Class_date
+  FROM `your_table`
+),
+max_id_lookup AS (
+  -- Find the highest number since July 2025
+  SELECT COALESCE(MAX(Reg_n), 0) as max_val 
+  FROM base_data 
+  WHERE Class_date > '2025-07-01'
+),
+recent_students AS (
+  -- Get unique boys from the 2 most recent classes
+  SELECT DISTINCT Reg_n, Boy_s_name
+  FROM (
+    SELECT Reg_n, Boy_s_name, 
+           DENSE_RANK() OVER (ORDER BY Class_date DESC) as dr
+    FROM base_data
+  )
+  WHERE dr <= 2
+),
+student_count AS (
+  -- Calculate how many real students we have
+  SELECT COUNT(*) as total_found FROM recent_students
+),
+final_list AS (
+  -- 1. The Real Students
+  SELECT 
+    Reg_n, 
+    Boy_s_name, 
+    ROW_NUMBER() OVER (ORDER BY Boy_s_name ASC) as row_idx
+  FROM recent_students
+
+  UNION ALL
+
+  -- 2. The Placeholder Rows
+  SELECT 
+    (SELECT max_val FROM max_id_lookup) + (val - (SELECT total_found FROM student_count)) AS Reg_n,
+    '' AS Boy_s_name,
+    val AS row_idx
+  FROM UNNEST(GENERATE_ARRAY(1, 20)) AS val
+  WHERE val > (SELECT total_found FROM student_count)
 )
 
-SELECT DISTINCT
+SELECT 
   Reg_n,
   Boy_s_name,
   '' AS Attendance_5,
@@ -28,5 +57,5 @@ SELECT DISTINCT
   '' AS Book_10,
   '' AS Bible_10,
   '' AS Uniform_5
-FROM nw
-ORDER BY Boy_s_name ASC;
+FROM final_list
+ORDER BY row_idx ASC;
